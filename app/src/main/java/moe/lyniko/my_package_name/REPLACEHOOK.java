@@ -15,7 +15,7 @@ public class REPLACE_HOOK implements IXposedHookLoadPackage {
 
         if ("com.package.name.target".equals(lpparam.packageName)) {
             try {
-                XposedHelpers.findAndHookMethod("com.package.name.target.REPLACE-CLASSNAME", lpparam.classLoader, "REPLACE-METHOD-NAME", new XC_MethodReplacement() {
+                XposedHelpers.findAndHookMethod("com.package.name.target.REPLACE-CLASSNAME", lpparam.classLoader, "REPLACE-METHOD-NAME", new XC_MethodHook() {
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         int pa1 = (int)param.args[0];
@@ -23,10 +23,12 @@ public class REPLACE_HOOK implements IXposedHookLoadPackage {
                             param.setResult(null); // 跳过原方法
                         }
                     }
-                    @Override
+/*                    @Override
                     protected Object replaceHookedMethod(MethodHookParam param) throws Throwable {
                         return true; // 也是跳过原方法并返回指定值，自行根据需要注释
                     }
+                    // 注意，这个需要把上面的 XC_MethodHook 改为 XC_MethodReplacement
+                    */
                 });
             } catch (Throwable t) {
                 XposedBridge.log(t);
