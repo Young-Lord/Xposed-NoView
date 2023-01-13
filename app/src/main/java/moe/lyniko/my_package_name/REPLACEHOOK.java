@@ -2,6 +2,7 @@ package moe.lyniko.my_package_name;
 
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.XC_MethodReplacement;
+import de.robv.android.xposed.XC_MethodHook;
 import de.robv.android.xposed.XSharedPreferences;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
@@ -16,6 +17,7 @@ public class REPLACE_HOOK implements IXposedHookLoadPackage {
         if ("com.package.name.target".equals(lpparam.packageName)) {
             try {
                 XposedHelpers.findAndHookMethod("com.package.name.target.REPLACE-CLASSNAME", lpparam.classLoader, "REPLACE-METHOD-NAME", new XC_MethodHook() {
+                // 上一行的 new 前记得加上参数class列表
                     @Override
                     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                         int pa1 = (int)param.args[0];
